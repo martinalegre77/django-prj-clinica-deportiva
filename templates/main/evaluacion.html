@@ -160,32 +160,32 @@
 
                 <div>
                     <label for="estado_general">Estado General &nbsp; &nbsp; </label>
-                    <input type="text" id="estado_general" name="estado_general">
+                    <input type="text" id="estado_general" name="estado_general" required>
                 </div>
 
                 <div>
                     <label for="talla">Talla (mts) &nbsp; &nbsp; </label>
-                    <input type="number" id="talla" name="talla" step="0.01" placeholder="Ej. 1.65">
+                    <input type="number" id="talla" name="talla" step="0.01" placeholder="Ej. 1.65" required>
                 </div>
 
                 <div>
                     <label for="peso">Peso (kgs) &nbsp; &nbsp; </label>
-                    <input type="number" id="peso" name="peso" step="0.001" placeholder="Ej. 70.500">
+                    <input type="number" id="peso" name="peso" step="0.001" placeholder="Ej. 70.500" required>
                 </div>
 
                 <div>
                     <label for="presion_arterial">Presión Arterial (mmHg) &nbsp; &nbsp; </label>
-                    <input type="text" id="presion_arterial" name="presion_arterial" placeholder="Ej. 120/80">
+                    <input type="text" id="presion_arterial" name="presion_arterial" placeholder="Ej. 120/80" required>
                 </div>
 
                 <div>
                     <label for="frecuencia_cardiaca">Frecuencia Cardíaca (lmp) &nbsp; &nbsp; </label>
-                    <input type="text" id="frecuencia_cardiaca" name="frecuencia_cardiaca" placeholder="Ej. 72">
+                    <input type="text" id="frecuencia_cardiaca" name="frecuencia_cardiaca" placeholder="Ej. 72" required>
                 </div>
 
                 <div>
                     <label for="oxigeno_sangre">Oxígeno en Sangre (%) &nbsp; &nbsp; </label>
-                    <input type="number" id="oxigeno_sangre" name="oxigeno_sangre" placeholder="Ej. 98">
+                    <input type="number" id="oxigeno_sangre" name="oxigeno_sangre" placeholder="Ej. 98" required>
                 </div>
             </fieldset>
 
@@ -200,7 +200,7 @@
 
                 <div>
                     <label for="observaciones">Observaciones &nbsp; &nbsp; </label>
-                    <input type="text" id="observaciones" name="observaciones">
+                    <input type="text" id="observaciones" name="observaciones" placeholder="Ej. Sin observaciones" required>
                 </div>
             </fieldset>
 
@@ -233,7 +233,6 @@
                     {% endif %}
 
                 <button class='registrar' type="submit" id='submit'>Guardar</button>
-                {% comment %} <button type="submit" id='grabar-btn' style="display: none;">Guardar</button> {% endcomment %}
 
             </div>
 

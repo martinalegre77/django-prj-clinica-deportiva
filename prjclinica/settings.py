@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# print("EMAIL_HOST_USER:", os.getenv('EMAIL_HOST_USER'))
+# print("EMAIL_HOST_PASSWORD:", os.getenv('EMAIL_HOST_PASSWORD'))
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -72,7 +79,7 @@ TEMPLATES = [
 ]
 
 LOGIN_URL = '/clinica/login/'
-LOGIN_REDIRECT_URL = '/clinica/re-login/'  # o a donde necesites redirigir después del login
+LOGIN_REDIRECT_URL = '/clinica/re-login/'  # redirigir después del login
 
 WSGI_APPLICATION = 'prjclinica.wsgi.application'
 
@@ -145,3 +152,22 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     # Otros backends si los tienes
 ]
+
+# Asegura que todas las solicitudes que llegan sean redirigidas automáticamente a HTTPS
+# SECURE_SSL_REDIRECT = True
+
+FILE_UPLOAD_HANDLERS = [
+    "django.core.files.uploadhandler.MemoryFileUploadHandler",
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler",
+]
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10 MB
+
+# settings.py
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = 'main.backend.email_backend.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'  # Servidor SMTP de tu proveedor (ejemplo: Gmail)
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD=os.getenv("EMAIL_HOST_PASSWORD")
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

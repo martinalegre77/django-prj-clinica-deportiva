@@ -198,7 +198,7 @@ class Evaluacion(models.Model):
     medico = models.ForeignKey(Usuario, on_delete=models.PROTECT)
     fecha = models.DateTimeField(auto_now=True, auto_now_add=False)
     tipo = models.CharField('Tipo de Apto', max_length=2, choices=TIPO_APTO_CHOISE)
-    observaciones = models.CharField('Observaciones', max_length=80, null=True, blank=True)
+    observaciones = models.CharField('Observaciones', max_length=80, null=True, blank=True, default="Sin observaciones")
     # evaluacion_file = models.ImageField(upload_to='evaluaciones/', null=True, blank=True)
     certificado_file = models.ImageField(upload_to='certificados/', null=True, blank=True)
 

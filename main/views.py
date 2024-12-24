@@ -31,6 +31,11 @@ from django.utils import timezone
 import cv2
 import face_recognition
 
+# Para envío de mail
+from django.core.mail import EmailMessage
+# from django.http import JsonResponse
+import os
+
 
 # VARIABLES
 TIPO_APTO_CHOISE = {
@@ -139,6 +144,37 @@ def certificado_doc(apellido, nombres, dni, fecha_nac, apto, fecha_hoy, medico, 
         lienzo.paste(qr_reescalado, (600, 600))
         # guardamos la imagen 
         lienzo.save(DIR_CER + f'certificado_{dni}.png')
+
+
+def enviar_archivo_email(ruta):
+    
+    # Configura destinatario, asunto y mensaje
+    destinatario = 'luismartinalegre@gmail.com'
+    asunto = 'Envío Certificado Apto Físico'
+    mensaje = 'Adjunto encontrarás el archivo certificado.'
+
+    # Verificar si el archivo existe
+    if not os.path.isfile(ruta):
+        print(f"Error: El archivo no existe en la ruta proporcionada -> {ruta}")
+        return
+    
+    try:
+        # Crear el objeto EmailMessage
+        email = EmailMessage(
+            asunto,
+            mensaje,
+            'martin.devpy.a@gmail.com',  # Remitente
+            [destinatario]          # Lista de destinatarios
+        )
+        
+        # Adjuntar el archivo
+        email.attach_file(ruta)
+        
+        # Enviar el email
+        email.send()
+        print('Email enviado correctamente')
+    except Exception as e:
+        return print(f'Error al enviar el email: {str(e)}')
 
 
 def reconocimiento(img):
@@ -379,7 +415,7 @@ def mostrar(request, dni, template_name='main/mostrar.html'):
         deportista = None
         form = DeportistaForm()
     try:
-        evaluaciones = Evaluacion.objects.filter(deportista=deportista)
+        evaluaciones = Evaluacion.objects.filter(deportista=deportista).order_by('-fecha')
     except Deportista.DoesNotExist:
         evaluaciones = None
 
@@ -395,7 +431,6 @@ def mostrar(request, dni, template_name='main/mostrar.html'):
 def evaluacion(request, id, template_name='main/evaluacion.html'):
     usuario = request.user
     deportista = Deportista.objects.get(id=id)
-    errors = []
 
     # Si el método es GET
     if request.method == 'GET':
@@ -407,8 +442,11 @@ def evaluacion(request, id, template_name='main/evaluacion.html'):
                                                 'post_method': False})
     
     # Si el método es POST
-    else:
+    if request.method == 'POST':
         form = EvaluacionForm(request.POST)
+        errors = []
+
+        # print(request.FILES.keys())
 
         if not request.POST.get('estado_general'):
             errors.append('El campo "Estado General" es obligatorio')
@@ -416,7 +454,7 @@ def evaluacion(request, id, template_name='main/evaluacion.html'):
             errors.append('El campo "Presión Arterial" es obligatorio')
         elif not request.POST.get('frecuencia_cardiaca'):
             errors.append('El campo "Frecuencia Cardíaca" es obligatorio')
-        elif not 'image' in request.FILES:
+        elif not request.FILES.get('image'):
             errors.append('Debe tomarse una foto')
         elif not request.POST.get('observaciones'):
             errors.append('El campo Observaciones es obligatorio')
@@ -439,7 +477,7 @@ def evaluacion(request, id, template_name='main/evaluacion.html'):
                 if oxigeno < 75 or  oxigeno > 100:
                     errors.append('Debe ingresar la saturación de oxígeno utilizando solo números')
             except InvalidOperation:
-                errors.append('Debe ingresar la saturación de oxígeno utilizando solo números')
+                errors.append('La saturación de oxígeno debe ser entre 75 y 100')
 
         # NO hay errores
         if not errors:
@@ -457,8 +495,12 @@ def evaluacion(request, id, template_name='main/evaluacion.html'):
                 return redirect('error-reconocimiento', id)
             
             # Si el reconocimiento es true hace el certificado
+            print("Reconocimiento satisfactorio")
+            # Obtiene la fecha actual en UTC
             fecha_actual = timezone.now()
-            fecha_formateada = fecha_actual.strftime("%d/%m/%Y")
+            # Convierte la fecha a la zona horaria local de Buenos Aires
+            fecha_actual_local = timezone.localtime(fecha_actual)
+            fecha_formateada = fecha_actual_local.strftime("%d/%m/%Y")
             fecha_nacimiento = deportista.fecha_nac
             fecha_nac_formt = fecha_nacimiento.strftime("%d/%m/%Y")
             crear_qr(deportista.dni)
@@ -477,6 +519,7 @@ def evaluacion(request, id, template_name='main/evaluacion.html'):
                             fecha_formateada, f'{usuario.apellido}, {usuario.nombres}', f'{tipo_mat} {usuario.matricula}')
             
             # Grabar
+
             eval = Evaluacion(deportista = deportista, 
                                 # FAMILIARES
                                 fam_cardiovasculares = to_bool(request.POST.get('fam_cardiovasculares')),
@@ -531,6 +574,11 @@ def evaluacion(request, id, template_name='main/evaluacion.html'):
             eval.save()
             # Guardo certificado
             ruta = DIR_CER + f'certificado_{deportista.dni}.png'
+            print("Certificado  confeccionado")
+            try:
+                enviar_archivo_email(ruta)
+            except:
+                pass
             with open(ruta, 'rb') as f:
                 image = ContentFile(f.read())
             eval.certificado_file.save(f'certificado_{deportista.dni}.png', ContentFile(image.read()))

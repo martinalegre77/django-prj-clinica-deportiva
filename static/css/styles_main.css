@@ -572,3 +572,9 @@ textarea {
 .no-errors {
     color: green; /* Color para el mensaje de éxito */
 }
+
+.boton-deshabilitado {
+    opacity: 0.5 !important; /* Hacerlo más opaco */
+    cursor: not-allowed !important; /* Cambiar el cursor */
+    background-color: #8f8a8a !important; /* Color de fondo */
+}

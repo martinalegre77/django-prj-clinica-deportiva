@@ -9,6 +9,13 @@ TIPO_APTO_CHOISE = {
     'C': 'NO AUTORIZADO hasta completar la evaluación, tratamiento y/o rehabilitación'
 }
 
+# FUNCIONES
+# Formateo de número de DNI (agregar puntos)
+def format_dni(dni):
+    numero = int(dni)
+    format = f"{numero:,}".replace(",", ".") 
+    return format
+
 # VIEWS
 def index(request, template_name='web/index.html'):
     return render(request, template_name)
@@ -20,8 +27,7 @@ def scan_aptos(request, template_name='web/scan-aptos.html'):
 
 def consulta_deportista(request, qr, template_name='web/consulta-deportista.html'):
     if request.method == 'GET':
-        tipo_apto = ''
-        # codigo_qr = request.GET.get('codigo_qr')  
+        
         try:
             deportista = Deportista.objects.get(dni=qr)
             evaluacion = Evaluacion.objects.filter(deportista=deportista).latest('fecha')
@@ -33,12 +39,13 @@ def consulta_deportista(request, qr, template_name='web/consulta-deportista.html
                 'nombre': deportista.nombres,
                 'apellido': deportista.apellido,
                 'edad': deportista.edad,
-                'dni': deportista.dni,
+                'dni': format_dni(deportista.dni),
                 'nac': fecha_nac_formt,
                 'fecha': fecha_eval_formt,
-                'apto': evaluacion.tipo
+                'apto': TIPO_APTO_CHOISE[evaluacion.tipo]
             }
             return render(request, template_name, data)
+        
         except Deportista.DoesNotExist:
             return redirect('no-encontrado', qr)
     else:

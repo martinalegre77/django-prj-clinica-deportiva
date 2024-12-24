@@ -31,9 +31,9 @@ if (typeof Html5QrcodeScanner !== 'undefined') {
 
     // Personalizar los textos de los botones
     html5QrcodeScanner.textResources = {
-        startScanning: "Leer QR",  // Personalizar el texto del botón "Start Scanning"
-        stopScanning: "Parar",  // Dejar vacío para no mostrar texto en el botón "Stop Scanning"
-        scanImageFile: ""          // Dejar vacío para no mostrar texto en el botón "Scan an Image File"
+        startScanning: "Leer QR",        // Personalizar el texto del botón "Start Scanning"
+        stopScanning: "Parar",           // Dejar vacío para no mostrar texto en el botón "Stop Scanning"
+        scanImageFile: ""                // Dejar vacío para no mostrar texto en el botón "Scan an Image File"
     };
 
     html5QrcodeScanner.render(onScanSuccess, onScanError);

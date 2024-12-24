@@ -23,5 +23,4 @@ urlpatterns = [
     path('list-deportes/', login_required(views.listar_deportes), name='listar-deportes'), # lista de deportes
     path('add-deporte/', login_required(views.agregar_deporte), name='agregar-deporte'), # agregar deporte
     path('edit-deporte/<int:id>/', login_required(views.editar_deporte), name='editar-deporte'), # editar info deporte
-    # path('accounts/', include('django.contrib.auth.urls')), # para autenticacion
 ]
