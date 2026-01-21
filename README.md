@@ -78,7 +78,7 @@ El proyecto se mantiene como referencia técnica de una solución integral, list
 ---
 
 ## 🎥 Video demostrativo
-👉 Ver demo y explicación técnica https://youtu.be/XXXXXXXX](https://youtu.be/jQxAEkLzGu0
+👉 Ver demo y explicación técnica https://youtu.be/jQxAEkLzGu0
 
 ---
 
