@@ -1,49 +1,99 @@
-Descarga o clonación del proyecto🤖
+# 🏥 Sistema Centralizado de Aptos Médicos para Deportistas
 
-Con entorno virtual:
+## 📌 Descripción
 
-1. Ingresar los siguiente comandos en consola:
+Sistema web desarrollado en **Django** para la gestión integral y digitalización del proceso de emisión de certificados de aptitud física para deportistas.
+El proyecto fue implementado como solución tecnológica para la **Clínica Municipal para el Deportista de Concordia**, reemplazando un sistema manual, fragmentado y propenso a errores.
 
-   python3 -m venv [nombreDelEntornoVirtual]
+La plataforma centraliza la información médica, optimiza los flujos internos y garantiza la **seguridad, trazabilidad y validez profesional** de los certificados emitidos.
 
-- este comando creara un entorno virtual donde se instalaran posteriormente los paquetes.
+---
 
-2. Para activarlo se emplea el siguiente comando:
+## 🎯 Objetivo del Proyecto
 
-   source nombreDelEntornoVirtual/bin/activate
+* Digitalizar y centralizar el proceso de emisión de aptos físicos
+* Reducir errores administrativos y duplicación de datos
+* Garantizar la intervención de un profesional médico matriculado
+* Facilitar al deportista el acceso a su certificado mediante **QR**
+* Incorporar **tecnologías innovadoras** en el ámbito de la salud deportiva
 
-- NOTA: en caso de trabajar con Windows, para activar el entorno virtual se ingresa el siguiente comando:
+---
 
-  nombreDelEntornoVirtual\Scripts\activate.bat
+## 🛠️ Tecnologías Utilizadas
 
-3. Para apagarlo (en ambos casos):
+* **Backend:** Python · Django 4.x
+* **Base de datos:** SQLite / PostgreSQL (según entorno)
+* **Autenticación:** Custom User Model (médicos y administrativos)
+* **Reconocimiento facial:** face-recognition · dlib · OpenCV
+* **Generación de QR:** qrcode
+* **Procesamiento de imágenes:** Pillow
+* **Frontend:** Django Templates
+* **Seguridad:** Control de accesos y roles
 
-  deactivate
+---
 
-  Sin entorno virtual comenzar desde acá:
+## ⚙️ Funcionalidades Principales
 
-4. Después correr el siguiente comando para obtener los paquetes empleados en la App:
+* ✔️ Gestión de usuarios médicos y administrativos
+* ✔️ Registro de deportistas, deportes e instituciones
+* ✔️ Carga completa de evaluaciones médicas
+* ✔️ Emisión de certificados de aptitud física
+* ✔️ Generación y lectura de **códigos QR**
+* ✔️ **Reconocimiento facial** para validación de identidad
+* ✔️ Historial médico centralizado
+* ✔️ Almacenamiento de certificados digitales
 
-   pip install -r requirements.txt
+---
 
-5. Clonar el repositorio:
+## 🧠 Aspectos Técnicos Destacados
 
-   git clone https://github.com/martinalegre77/prjclinica.git
+* Implementación de **modelo de usuario personalizado** (AbstractBaseUser)
+* Separación clara de entidades: Usuario, Deportista, Evaluación, Institución
+* Integridad referencial mediante ForeignKey y PROTECT
+* Manejo de archivos multimedia (imágenes y certificados)
+* Validación de identidad mediante biometría facial
+* Enfoque en **seguridad, trazabilidad y fiabilidad de datos médicos**
 
-6. Hacer migraciones:
+---
 
-   python manage.py makemigrations
-   python manage.py migrate
+## 🔐 Seguridad y Ética
 
-7. Arrancar el servidor Django:
+* Acceso restringido según rol (médico / administrativo)
+* Intervención obligatoria de un profesional matriculado
+* Protección de datos sensibles
+* El sistema evita la autoemisión de certificados sin control médico
 
-   python manage.py runserver
+---
 
-8. Las urls principales del proyecto son:
+## 📂 Estado del Código
 
-   http://127.0.0.1:8000/clinica/
-   http://127.0.0.1:8000/municipalidad/
-   http://127.0.0.1:8000/admin/login/?next=/admin/
+✅ **Repositorio público con código completo**
+
+Este repositorio contiene el **código completo y funcional** del sistema, desarrollado como solución real para la digitalización del proceso de emisión de aptos físicos en el ámbito de la salud deportiva.
+
+Si bien el sistema fue diseñado, implementado y probado para su uso institucional, **su puesta en producción no se concretó debido a cuestiones administrativas y burocráticas ajenas al desarrollo técnico**.
+
+El proyecto se mantiene como referencia técnica de una solución integral, lista para ser desplegada o adaptada a otros contextos similares.
+
+---
+
+## 👤 Autor
+
+**Luis Alegre**
+Licenciado en Informática
+Backend / Fullstack Developer
+
+📍 Proyecto desarrollado entre abril y junio de 2024
+
+---
+
+## 🚀 Contexto de Aplicación
+
+Este proyecto representa un caso real de aplicación de tecnología en el ámbito de la **salud pública y deportiva**, orientado a la modernización de procesos críticos mediante software seguro, confiable y escalable.
+
+> 💡 Este sistema puede ser reutilizado o adaptado para clínicas, federaciones deportivas, municipios u organizaciones que requieran la emisión segura de certificados médicos digitales.
+
+
    
 
    
